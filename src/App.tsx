@@ -1,6 +1,6 @@
 import './App.css'
 import { HashRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/Home/home";
 import Login from "./components/Login";
 import Register from "./components/Login";
 import Search from "./components/Search";
