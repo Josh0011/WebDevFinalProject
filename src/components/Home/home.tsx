@@ -4,10 +4,14 @@ import "../styles.css";
 import "./styles.css";
 import Sidebar from "../Sidebar/sidebar";
 import { Link } from "react-router-dom";
+import { auth } from "../../firebaseConfig"; // Import Firebase auth
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import SearchBar from "../Search/searchbar";
+import axios from "axios";
 
 const Home = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [latestMembers, setLatestMembers] = useState([
     { id: 1, name: "SecondBest", profilePic: "surge.png" },
     { id: 2, name: "JuanCarlos", profilePic: "kit.jpg" },
@@ -60,8 +64,42 @@ const Home = () => {
   ]);
 
   useEffect(() => {
-    // Future: Fetch dynamic data here
+    // Monitor Firebase authentication state
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          setIsLoggedIn(true);
+          setCurrentUser(user);
+
+          // Fetch user-specific data (e.g., latest members or posts)
+          const token = await user.getIdToken();
+          const response = await axios.get(`${import.meta.env.VITE_REMOTE_SERVER}/api/user/data`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          console.log("User data fetched:", response.data);
+
+          // Optionally update latest members or other user-specific data here
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      } else {
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup on unmount
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Sign out from Firebase
+      setIsLoggedIn(false);
+      setCurrentUser(null);
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <div className="container-fluid" id="bs-home">
@@ -107,7 +145,7 @@ const Home = () => {
             <div id="bs-carousel-fade-right"></div>
           </div>
         </div>
-        {/* LOGIN */}
+        {/* LOGIN/LOGOUT */}
         <div className="col-3 d-flex flex-column">
           {isLoggedIn ? (
             <div id="bs-profile" className="d-flex align-items-center ms-5">
@@ -115,7 +153,7 @@ const Home = () => {
                 to="/profile"
                 className="text-decoration-none text-white d-flex align-items-center"
               >
-                <span className="fw-bold">GANDUU</span>
+                <span className="fw-bold">{currentUser?.displayName || currentUser?.email || "User"}</span>
                 <img
                   src="byron.png"
                   alt="User Profile"
@@ -123,6 +161,12 @@ const Home = () => {
                   style={{ width: "70px", height: "70px", objectFit: "cover" }}
                 />
               </Link>
+              <button
+                onClick={handleLogout}
+                className="btn btn-danger btn-sm ms-3"
+              >
+                Logout
+              </button>
             </div>
           ) : (
             <div id="bs-auth-buttons" className="text-center">
@@ -179,7 +223,7 @@ const Home = () => {
                 <p className="text-start">{post.body}</p>
                 <hr />
                 {/* Comments Section */}
-               <h6 className="fw-bold text-start">Comments</h6>
+                <h6 className="fw-bold text-start">Comments</h6>
                 <div
                   className="comments-section mb-3"
                   style={{ maxHeight: "150px", overflowY: "auto" }}
@@ -201,7 +245,7 @@ const Home = () => {
                       />
                       <p className="mb-0">
                         <strong>{comment.user}:</strong> {comment.text}
-                      </p> 
+                      </p>
                     </div>
                   ))}
                 </div>
