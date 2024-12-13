@@ -6,12 +6,15 @@ import Register from "./components/Register";
 import Search from "./components/Search";
 import Details from "./components/Details";
 import Profile from "./components/Profile";
+import { Provider } from "react-redux";
+import store from "./store";
 import "./App.css";
 
 function App() {
   return (
     <>
       <HashRouter>
+      <Provider store={store}>
           <div>
               <Routes>
                   <Route path="/" element={<Home />} />
@@ -23,6 +26,7 @@ function App() {
                   <Route path="/profile/:uid" element={<Profile />} />
               </Routes>
           </div>
+          </Provider>
       </HashRouter>
     </>
   )

@@ -8,9 +8,12 @@ import { auth } from "../../firebaseConfig"; // Import Firebase auth
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import SearchBar from "../Search/searchbar";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../Protection/authReducer";
 
 const Home = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: any) => state.auth.isLoggedIn);
   const [currentUser, setCurrentUser] = useState(null);
   const [latestMembers, setLatestMembers] = useState([
     { id: 1, name: "SecondBest", profilePic: "surge.png" },
@@ -67,15 +70,18 @@ const Home = () => {
     // Monitor Firebase authentication state
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        dispatch(login()); // Update Redux state
+        setCurrentUser(user);
         try {
-          setIsLoggedIn(true);
           setCurrentUser(user);
-
           // Fetch user-specific data (e.g., latest members or posts)
           const token = await user.getIdToken();
-          const response = await axios.get(`${import.meta.env.VITE_REMOTE_SERVER}/api/user/data`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
+          const response = await axios.get(
+            `${import.meta.env.VITE_REMOTE_SERVER}/api/user/data`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
           console.log("User data fetched:", response.data);
 
           // Optionally update latest members or other user-specific data here
@@ -83,18 +89,17 @@ const Home = () => {
           console.error("Error fetching user data:", error);
         }
       } else {
-        setIsLoggedIn(false);
         setCurrentUser(null);
       }
     });
 
     return () => unsubscribe(); // Cleanup on unmount
-  }, []);
+  }, [dispatch]);
 
   const handleLogout = async () => {
     try {
       await signOut(auth); // Sign out from Firebase
-      setIsLoggedIn(false);
+      dispatch(logout());
       setCurrentUser(null);
     } catch (error) {
       console.error("Error logging out:", error);
@@ -148,22 +153,33 @@ const Home = () => {
         {/* LOGIN/LOGOUT */}
         <div className="col-3 d-flex flex-column">
           {isLoggedIn ? (
-            <div id="bs-profile" className="d-flex align-items-center ms-5">
-              <Link
-                to="/profile"
-                className="text-decoration-none text-white d-flex align-items-center"
-              >
-                <span className="fw-bold">{currentUser?.displayName || currentUser?.email || "User"}</span>
-                <img
-                  src="byron.png"
-                  alt="User Profile"
-                  className="rounded-circle ms-2 border border-4 border-success"
-                  style={{ width: "70px", height: "70px", objectFit: "cover" }}
-                />
-              </Link>
+            <div
+              id="bs-profile"
+              className="d-flex flex-column align-items-start ms-5"
+            >
+              <div className="d-flex align-items-center">
+                <Link
+                  to="/profile"
+                  className="text-decoration-none text-white d-flex align-items-center"
+                >
+                  <span className="fw-bold me-2">
+                    {currentUser?.displayName || currentUser?.email || "User"}
+                  </span>
+                  <img
+                    src="byron.png"
+                    alt="User Profile"
+                    className="rounded-circle border border-4 border-success"
+                    style={{
+                      width: "70px",
+                      height: "70px",
+                      objectFit: "cover",
+                    }}
+                  />
+                </Link>
+              </div>
               <button
                 onClick={handleLogout}
-                className="btn btn-danger btn-sm ms-3"
+                className="btn btn-danger btn-sm mt-2"
               >
                 Logout
               </button>
@@ -268,12 +284,11 @@ const Home = () => {
             ))}
           </div>
         </section>
-        {/* Sidebar */}
         <aside
           className="col-lg-3 col-md-4 px-3 d-none d-md-block"
           id="bs-sidebar"
         >
-          <Sidebar />
+          {isLoggedIn && <Sidebar />}
         </aside>
       </main>
     </div>
