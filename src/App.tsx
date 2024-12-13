@@ -19,6 +19,7 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/search" element={<Search />} />
                   <Route path="/details/:did" element={<Details />} />
+                  <Route path="/profile/" element={<Profile />} />
                   <Route path="/profile/:uid" element={<Profile />} />
               </Routes>
           </div>

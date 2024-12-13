@@ -54,8 +54,8 @@ const Sidebar = () => {
 
   return (
     <aside id="bs-sidebar">
-      <section id="bs-recent-posts" className="mb-4">
-        <h2 className="h5">Recent Posts</h2>
+      <section id="bs-recent-posts" className="mt-4 mb-4 ">
+        <h2 className="h5 fw-bold">Your Recent Posts</h2>
         <hr />
         <ul className="list-unstyled">
           {recentPosts.map((post) => (
@@ -71,7 +71,7 @@ const Sidebar = () => {
       </section>
 
       <section id="bs-recent-games">
-        <h2 className="h5">Recent Games</h2>
+        <h2 className="h5 fw-bold">Your Recent Games</h2>
         <hr />
 
         <ul className="list-unstyled">

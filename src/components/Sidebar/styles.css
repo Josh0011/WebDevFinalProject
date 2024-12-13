@@ -1,42 +1,33 @@
-/* Sidebar Styling */
 #bs-sidebar {
-    position: fixed;
-    top: 119px; /* Start below the header */
-    right: 0;
-    height: calc(100vh - 70px);
-    width: 300px;
-    background-color: #141432;
-    overflow-y: auto;
-    padding: 20px;
-    z-index: 999;
+    flex: 0 0 300px;
+    padding: 4px;
+    background-color: #1a1a3a;
+    height: auto;
   }
   
   @media (max-width: 768px) {
     #bs-sidebar {
-      position: relative; /* Allow it to become part of the flow */
+      position: relative; 
       top: 0;
-      height: auto; /* Expand naturally */
-      width: 100%; /* Full width on smaller screens */
+      height: auto; 
+      width: 100%; 
     }
   }  
-  
 
-  /* Sidebar Post Card Styling */
   .sidebar-post-card {
     display: flex;
-    align-items-center;
     gap: 10px;
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #1a1a40; /* Same color as the main background */
+    background-color: #1a1a40; 
     color: white;
-    overflow: hidden; /* Ensures no overflow */
+    overflow: hidden;
     cursor: pointer;
   }
   
   .sidebar-post-card:hover {
-    background-color: #141432; /* Slightly darker for hover effect */
+    background-color: #141432; 
   }
   
   .post-image-container img {
@@ -56,14 +47,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: calc(100% - 20px); /* Prevent text from overflowing */
+    max-width: calc(100% - 20px); 
   }
   
   .chevron-icon {
     color: #434384;
   }
 
-/* Recent Game Card Styling */
 .recent-game-card {
     display: flex;
     align-items: start;
@@ -71,18 +61,18 @@
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #1a1a40; /* Match the main background color */
+    background-color: #1a1a40; 
     color: white;
     overflow: hidden;
   }
   
   .recent-game-card:hover {
-    background-color: #141432; /* Slightly darker hover effect */
+    background-color: #141432;
   }
   
   .map-image-container img {
-    width: 126px; /* 504px scaled down */
-    height: 204px; /* 816px scaled down */
+    width: 126px; 
+    height: 204px; 
     object-fit: cover;
     border-radius: 5px;
   }
@@ -90,7 +80,7 @@
   .game-info {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Even spacing for all elements */
+    justify-content: space-between; 
     height: 100%;
   }
   
@@ -123,14 +113,14 @@
   }
   
   .game-stats .kills {
-    color: #28a745; /* Green for kills */
+    color: #28a745; 
   }
   
   .game-stats .deaths {
-    color: #dc3545; /* Red for deaths */
+    color: #dc3545; 
   }
   
   .game-stats .damage {
-    color: #ffc61c; /* Yellow for damage */
+    color: #ffc61c; 
   }
   
