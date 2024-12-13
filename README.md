@@ -1,3 +1,12 @@
+Joshua Sharma
+Kaung Mo
+Section 1
+
+UML diagram: https://lucid.app/lucidchart/9f6a321a-44d1-4e68-8e63-9787e0403574/edit?viewport_loc=-702%2C40%2C2071%2C1199%2C0_0&invitationId=inv_2ae00dd5-0f77-4e5c-96b1-e8c22b818b16
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
