@@ -155,7 +155,7 @@ const Home = () => {
           {isLoggedIn ? (
             <div
               id="bs-profile"
-              className="d-flex flex-column align-items-start ms-5"
+              className="d-flex flex-column align-items-start ms-3"
             >
               <div className="d-flex align-items-center">
                 <Link
