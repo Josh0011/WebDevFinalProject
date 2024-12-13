@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles.css";
+import "../styles.css";
 import { BsChevronRight } from "react-icons/bs";
 
 const SidebarPostCard = ({
