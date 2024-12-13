@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles.css";
 import "./styles.css";
 import Sidebar from "../Sidebar/sidebar";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -70,10 +71,12 @@ const Home = () => {
             </div>
           ) : (
             <div id="bs-auth-buttons" className="text-center">
-              <button className="btn btn-primary btn-lg mb-2 me-2">
+              <Link to="/login" className="btn btn-primary btn-lg mb-2 me-2">
                 Log In
-              </button>
-              <button className="btn btn-success btn-lg mb-2">Sign Up</button>
+              </Link>
+              <Link to="/register" className="btn btn-success btn-lg mb-2">
+                Sign Up
+              </Link>
               <p className="text-secondary small mb-0">
                 Sign in to access personalized features!
               </p>

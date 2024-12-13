@@ -2,7 +2,7 @@ import './App.css'
 import { HashRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/Home/home";
 import Login from "./components/Login";
-import Register from "./components/Login";
+import Register from "./components/Register";
 import Search from "./components/Search";
 import Details from "./components/Details";
 import Profile from "./components/Profile";
