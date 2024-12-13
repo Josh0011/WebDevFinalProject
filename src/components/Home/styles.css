@@ -8,7 +8,7 @@
     padding: 10px 20px;
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    flex-wrap: wrap; 
     gap: 10px;
   }
 
@@ -18,26 +18,24 @@
     font-size: 1.5rem;
   }
   
-  /* Carousel Styling */
-/* Carousel Wrapper */
 #bs-carousel-wrapper {
-    position: relative; /* Positioning for the gradient overlay */
-    overflow: hidden; /* Ensure elements stay within the container */
+    position: relative; 
+    overflow: hidden; 
   }
   
-  /* Carousel */
+ 
   #bs-carousel {
     display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    gap: 10px; /* Spacing between members */
-    overflow-x: auto; /* Allow horizontal scrolling */
-    padding-right: 50px; /* Ensure space for the fade effect */
+    flex-wrap: nowrap; 
+    gap: 10px;
+    overflow-x: auto; 
+    padding-right: 50px;
   }
   
   
   #bs-carousel {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   
   #bs-carousel-fade-left {
@@ -47,9 +45,9 @@
     height: 100%;
     width: 50px;
     background: linear-gradient(to right, rgba(20, 20, 50, 1), rgba(20, 20, 50, 0));
-    pointer-events: none; /* Allow interactions with underlying elements */
+    pointer-events: none;
 }
-  /* Fade Effect */
+ 
   #bs-carousel-fade-right {
     position: absolute;
     top: 0;
@@ -57,42 +55,42 @@
     height: 100%;
     width: 50px;
     background: linear-gradient(to left, rgba(20, 20, 50, 1), rgba(20, 20, 50, 0));
-    pointer-events: none; /* Allow interactions with underlying elements */
+    pointer-events: none;
   }
   
 
   #bs-main-content {
-    margin-top: calc(var(--header-height, 100px)); /* Push down below header */
+    margin-top: calc(var(--header-height, 100px));
     display: flex;
     width: 100%; 
-    flex-wrap: nowrap; /* Prevent wrapping of main content */
+    flex-wrap: nowrap;
   }
  
 
   #bs-posts-viewer {
-    flex: 1; /* Takes up the remaining space */
+    flex: 1;
     padding: 20px;
 }
   .posts-header {
     width: 100%;
-    text-align: left; /* Align the header text to the left */
+    text-align: left;
     font-size: 1.5rem;
     font-weight: bold;
     color: #fff;
-    margin-bottom: 10px; /* Space between the header and the first post */
+    margin-bottom: 10px;
   }
   .posts-container {
-  max-width: 800px; /* Restrict post width for better readability */
+  max-width: 800px;
   width: 100%;
 }
 img.img-fluid {
-    border-radius: 10px; /* Add some rounding to images for a modern look */
+    border-radius: 10px;
   }
 
 .comments-section {
     max-height: 150px;
     overflow-y: auto;
-    background-color: #141432; /* Subtle background for comments section */
+    background-color: #141432;
     border-radius: 10px;
     padding: 10px;
   }

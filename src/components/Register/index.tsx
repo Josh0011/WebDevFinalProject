@@ -41,11 +41,10 @@ const Register = () => {
 
       console.log("Backend response:", response.data);
 
-      // Display success message
       setSuccessMessage("Registration successful! Redirecting to login...");
       setTimeout(() => {
         navigate("/login");
-      }, 3000); // Redirect after 3 seconds
+      }, 3000); 
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         setErrorMessage("This email is already registered. Please log in instead.");

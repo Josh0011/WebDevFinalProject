@@ -39,7 +39,7 @@ const SearchPage: React.FC = () => {
         throw new Error("Failed to fetch clubs. Please try again.");
       }
       const data = await response.json();
-      setClubs(data.items); // Adjust according to the API response structure
+      setClubs(data.items); 
       setLoading(false);
     } catch (error) {
       setError(error.message || "An unexpected error occurred.");

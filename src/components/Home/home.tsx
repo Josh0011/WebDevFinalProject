@@ -4,7 +4,7 @@ import "../styles.css";
 import "./styles.css";
 import Sidebar from "../Sidebar/sidebar";
 import { Link } from "react-router-dom";
-import { auth } from "../../firebaseConfig"; // Import Firebase auth
+import { auth } from "../../firebaseConfig"; 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import SearchBar from "../Search/searchbar";
 import axios from "axios";
@@ -17,9 +17,9 @@ const Home = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [latestMembers, setLatestMembers] = useState([
     { id: 1, name: "SecondBest", profilePic: "surge.png" },
-    { id: 2, name: "JuanCarlos", profilePic: "kit.jpg" },
-    { id: 3, name: "Benjamin Welsh", profilePic: "kit.jpg" },
-    { id: 4, name: "Andres Matton-Conover", profilePic: "kit.jpg" },
+    { id: 2, name: "JuanCarlos", profilePic: "janet.png" },
+    { id: 3, name: "Benjamin Welsh", profilePic: "lou.png" },
+    { id: 4, name: "Andres Matton-Conover", profilePic: "willow.png" },
   ]);
   const [recentPosts, setRecentPosts] = useState([
     {
@@ -59,7 +59,7 @@ const Home = () => {
         {
           id: 1,
           user: "Alice",
-          profilePic: "user3.png",
+          profilePic: "lily.png",
           text: "Mine is Double Swoosh!",
         },
       ],
@@ -67,14 +67,10 @@ const Home = () => {
   ]);
 
   useEffect(() => {
-    // Monitor Firebase authentication state
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        dispatch(login()); // Update Redux state
-        setCurrentUser(user);
+        dispatch(login());
         try {
-          setCurrentUser(user);
-          // Fetch user-specific data (e.g., latest members or posts)
           const token = await user.getIdToken();
           const response = await axios.get(
             `${import.meta.env.VITE_REMOTE_SERVER}/api/user/data`,
@@ -84,7 +80,6 @@ const Home = () => {
           );
           console.log("User data fetched:", response.data);
 
-          // Optionally update latest members or other user-specific data here
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
@@ -93,12 +88,12 @@ const Home = () => {
       }
     });
 
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();
   }, [dispatch]);
 
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Sign out from Firebase
+      await signOut(auth);
       dispatch(logout());
       setCurrentUser(null);
     } catch (error) {
@@ -201,7 +196,7 @@ const Home = () => {
       </header>
 
       <main className="row" id="bs-main-content">
-        {/* Posts Viewer */}
+        {/* POSTS */}
         <section className="col-lg-9 col-md-8" id="bs-posts-viewer">
           <div className="d-flex justify-content-between align-items-center mb-4">
             <h2 className="posts-header">For You</h2>
@@ -224,7 +219,7 @@ const Home = () => {
                   />
                   <span className="fw-bold">{post.poster.username}</span>
                 </div>
-                {/* Post Image */}
+                {/* POST IMAGE */}
                 <img
                   src={post.image}
                   alt={post.title}
@@ -234,11 +229,11 @@ const Home = () => {
                     objectFit: "contain",
                   }}
                 />
-                {/* Post Title and Description */}
+                {/* TITLE N DESC */}
                 <h5 className="fw-bold text-start">{post.title}</h5>
                 <p className="text-start">{post.body}</p>
                 <hr />
-                {/* Comments Section */}
+                {/* COMMENTS */}
                 <h6 className="fw-bold text-start">Comments</h6>
                 <div
                   className="comments-section mb-3"

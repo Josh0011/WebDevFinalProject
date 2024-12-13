@@ -50,6 +50,31 @@ const Sidebar = () => {
       deaths: 3,
       damage: 28234,
     },
+
+    {
+        id: 3,
+        mode: "Brawl Ball",
+        map: "Triple Dribble",
+        mapImage: "tripledribble.png",
+        brawlerImage: "lou.png",
+        brawlerName: "Lou",
+        brawlerLevel: 11,
+        kills: 7,
+        deaths: 4,
+        damage: 30493,
+      },
+      {
+        id: 4,
+        mode: "Knockout",
+        map: "Goldarm Gulch",
+        mapImage: "goldarmgulch.png",
+        brawlerImage: "willow.png",
+        brawlerName: "Willow",
+        brawlerLevel: 9,
+        kills: 2,
+        deaths: 10,
+        damage: 12043,
+      },
   ];
 
   return (

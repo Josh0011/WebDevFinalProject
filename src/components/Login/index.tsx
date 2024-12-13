@@ -35,12 +35,11 @@ const Login = () => {
 
       console.log("Backend response:", response.data);
 
-      // Display success message
       setSuccessMessage("Login successful! Redirecting to home...");
       setErrorMessage("");
       setTimeout(() => {
         navigate("/");
-      }, 2000); // Redirect after 2 seconds
+      }, 2000); 
     } catch (error) {
       let message = "An unexpected error occurred. Please try again.";
 

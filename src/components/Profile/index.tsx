@@ -1,114 +1,65 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.css";
 import RecentGameCard from "../Sidebar/RecentGameCard";
 import "../styles.css";
+import { useDispatch, useSelector } from "react-redux";
+import profileClient from "./client";
+import { updateProfile, addPost, deletePost } from "./reducer";
 
 const Profile = () => {
-  const [profile, setProfile] = useState({
-    user: {
-      name: "SecondBest",
-      id: 1,
-      email: "secondbest@gmail.com",
-      type: "User", // "Admin" for admin users
-    },
-    brawlStarsId: "64YPF2",
-    followers: [
-      { id: 1, name: "Byron", profilePic: "byron.png" },
-      { id: 2, name: "Janet", profilePic: "janet.png" },
-      { id: 3, name: "Sandy", profilePic: "sandy.png" },
-      { id: 1, name: "Byron", profilePic: "byron.png" },
-      { id: 2, name: "Janet", profilePic: "janet.png" },
-      { id: 3, name: "Sandy", profilePic: "sandy.png" },
-      { id: 2, name: "Janet", profilePic: "janet.png" },
-    ],
-    following: [
-      { id: 3, name: "Ben", profilePic: "r-t.png" },
-      { id: 4, name: "Josh", profilePic: "lou.png" },
-      { id: 3, name: "Ben", profilePic: "r-t.png" },
-      { id: 4, name: "Josh", profilePic: "lou.png" },
-      { id: 3, name: "Ben", profilePic: "r-t.png" },
-      { id: 4, name: "Josh", profilePic: "lou.png" },
-      { id: 3, name: "Ben", profilePic: "r-t.png" },
-    ],
-    recentPosts: [
-      {
-        id: 1,
-        title: "My Current Meta Tier List",
-        body: "This place is for a small description. I love Brawl Stars!",
-        image: "tierlist.png",
-        comments: [
-          {
-            id: 1,
-            user: "SecondBest",
-            profilePic: "surge.png",
-            text: "put kit at F bro",
-          },
-          {
-            id: 2,
-            user: "JuanCarlos",
-            profilePic: "kit.jpg",
-            text: "put kit at S bro",
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: "I WANT TO DIE",
-        body: "This place is for a small description. I love Brawl Stars!",
-        image: "maps.png",
-        comments: [
-          {
-            id: 1,
-            user: "SecondBest",
-            profilePic: "surge.png",
-            text: "put kit at F bro",
-          },
-          {
-            id: 2,
-            user: "JuanCarlos",
-            profilePic: "kit.jpg",
-            text: "put kit at S bro",
-          },
-        ],
-      },
-    ],
-    recentGames: [
-      {
-        id: 1,
-        mode: "Gem Grab",
-        map: "Double Swoosh",
-        mapImage: "doubleswoosh.png",
-        brawlerImage: "sandy.png",
-        brawlerName: "Sandy",
-        brawlerLevel: 9,
-        kills: 7,
-        deaths: 5,
-        damage: 13472,
-      },
-      {
-        id: 2,
-        mode: "Bounty",
-        map: "Shooting Star",
-        mapImage: "shootingstar.png",
-        brawlerImage: "angelo.png",
-        brawlerName: "Angelo",
-        brawlerLevel: 10,
-        kills: 10,
-        deaths: 3,
-        damage: 28234,
-      },
-    ],
-  });
+  const dispatch = useDispatch();
+  const { profile, recentPosts, recentGames } = useSelector(
+    (state: any) => state.profile
+  );
 
   useEffect(() => {
-    // Future: Fetch dynamic data from the backend and update the state
-  }, []);
+    const fetchProfileData = async () => {
+      try {
+        const data = await profileClient.fetchProfile();
+        dispatch(
+          updateProfile({
+            email: data.user.email,
+            brawlStarsId: data.user.brawlStarsId,
+          })
+        );
+        data.posts.forEach((post: any) => dispatch(addPost(post)));
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
+    };
+    fetchProfileData();
+  }, [dispatch]);
+
+  const handleUpdateProfile = async (email: string, brawlStarsId: string) => {
+    try {
+      const updatedProfile = await profileClient.updateProfile({
+        email,
+        brawlStarsId,
+      });
+      dispatch(
+        updateProfile({
+          email: updatedProfile.email,
+          brawlStarsId: updatedProfile.brawlStarsId,
+        })
+      );
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
+  const handleDeletePost = async (postId: string) => {
+    try {
+      await profileClient.deletePost(postId);
+      dispatch(deletePost(postId));
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
 
   return (
     <div className="profile-page w-100">
-      {/* Header Section */}
-
+      {/* HEADER */}
       <div className="header-image">
         <img src="header.jpg" alt="Header" className="blurred-header" />
       </div>
@@ -121,26 +72,41 @@ const Profile = () => {
       </div>
       <div className="profile-info text-white text-center w-100">
         <h1 className="mb-1 fw-bold">
-          {profile.user.name}{" "}
+          {profile.user?.name || "Loading..."}{" "}
           <span className="text-secondary fw-bold me-3">
-            @{profile.user.id}
+            @{profile.user?.id || ""}
           </span>
-          <p className="user-type ">{profile.user.type}</p>
+          <p className="user-type ">{profile.user?.type || "User"}</p>
         </h1>
 
         <div className="row mt-5 ms-2 me-2">
           <div className="col-12 d-flex mb-3">
             <h4 className="me-3 fw-bold">Email:</h4>
-            <p className="info-block ">{profile.user.email}</p>
+            <input
+              type="email"
+              className="form-control"
+              value={profile.user?.email || ""}
+              onChange={(e) =>
+                handleUpdateProfile(e.target.value, profile.brawlStarsId)
+              }
+            />
           </div>
           <div className="col-12 d-flex mb-5">
             <h4 className="me-3 fw-bold">Brawl Stars ID:</h4>
-            <p className="info-block ">{profile.brawlStarsId}</p>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter your Brawl Stars ID"
+              value={profile.brawlStarsId || ""}
+              onChange={(e) =>
+                handleUpdateProfile(profile.user?.email, e.target.value)
+              }
+            />
           </div>
         </div>
       </div>
 
-      {/* Followers */}
+      {/* FOLLOWERS */}
       <section className="followers-section ms-3 mb-5 me-3">
         <h3 className="text-white text-start fw-bold">
           Followers ({profile.followers.length}):
@@ -171,7 +137,7 @@ const Profile = () => {
         </div>
       </section>
 
-      {/* Following */}
+      {/* FOLLOWING */}
       <section className="following-section ms-3 mb-5 me-3 ">
         <h3 className="text-white text-start fw-bold">
           Following ({profile.following.length}):
@@ -208,9 +174,9 @@ const Profile = () => {
         <div className="position-relative" id="carousel-wrapper">
           <div id="carousel-fade-left"></div>
           <div className="d-flex" id="carousel">
-            {profile.recentPosts.map((post) => (
+            {recentPosts.map((post) => (
               <div
-                key={post.id}
+                key={post._id}
                 className="recent-post-card d-flex flex-column mb-4"
               >
                 <img
@@ -226,6 +192,12 @@ const Profile = () => {
                   <h4 className="fw-bold">{post.title}</h4>
                   <p>{post.body}</p>
                 </div>
+                <button
+                  className="btn btn-danger mt-2"
+                  onClick={() => handleDeletePost(post._id)}
+                >
+                  Delete Post
+                </button>
                 <div className="comments-section text-white">
                   <h6 className="fw-bold text-start">Comments</h6>
                   <div
@@ -234,7 +206,7 @@ const Profile = () => {
                   >
                     {post.comments.map((comment) => (
                       <div
-                        key={comment.id}
+                        key={comment._id}
                         className="d-flex align-items-center mb-2"
                       >
                         <img
@@ -254,7 +226,6 @@ const Profile = () => {
                     ))}
                   </div>
                 </div>
-                
               </div>
             ))}
           </div>
@@ -262,11 +233,11 @@ const Profile = () => {
         </div>
       </section>
 
-      {/* Recent Games */}
+      {/* RECENT GAMES */}
       <section className="recent-games-section p-4 w-100">
         <h3 className="text-white text-start fw-bold">Recent Games</h3>
         <div className="carousel d-flex overflow-auto">
-          {profile.recentGames.map((game) => (
+          {recentGames.map((game) => (
             <li key={game.id} className="mb-3 me-3">
               <RecentGameCard
                 mode={game.mode}
