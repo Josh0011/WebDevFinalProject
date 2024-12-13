@@ -1,17 +1,20 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-auth-domain",
-    projectId: "your-project-id",
-    storageBucket: "your-storage-bucket",
-    messagingSenderId: "your-messaging-sender-id",
-    appId: "your-app-id",
+  apiKey: "AIzaSyCerXks5RHv6LMxAm6Bbh_3xD5XnCblTxY",
+  authDomain: "melodiestats.firebaseapp.com",
+  projectId: "melodiestats",
+  storageBucket: "melodiestats.firebasestorage.app",
+  messagingSenderId: "332413868317",
+  appId: "1:332413868317:web:febf1c2767d7202586e9f4",
+  measurementId: "G-P4MZMZKJ76"
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
-
-export { auth, googleProvider };
+export const auth = getAuth(app);
