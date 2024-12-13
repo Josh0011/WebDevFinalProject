@@ -20,14 +20,14 @@ const RecentGameCard = ({
           alt={`${map} map`}
           className="img-fluid rounded"
           style={{
-            width: "126px", // 504px / 4
-            height: "204px", // 816px / 4
+            width: "126px",
+            height: "204px",
             objectFit: "cover",
           }}
         />
       </div>
       <div className="game-info ms-3 d-flex flex-column justify-content-between">
-        <h5 className="game-title mb-2">{`${mode}  ${map}`}</h5>
+        <h5 className="game-title mb-2">{`${mode} | ${map}`}</h5>
         <div className="brawler-info d-flex align-items-center mb-3">
           <img
             src={brawlerImage}

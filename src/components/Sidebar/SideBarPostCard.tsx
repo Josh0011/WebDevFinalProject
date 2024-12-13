@@ -18,7 +18,7 @@ const SidebarPostCard = ({
         />
       </div>
       <div className="post-content ms-3 flex-grow-1">
-        <h5 className="post-title mb-1 text-truncate">{title}</h5>
+        <h5 className="post-title mb-1 fw-bold text-truncate">{title}</h5>
         <p className="post-description mb-0 text-truncate">{description}</p>
       </div>
       <BsChevronRight className="chevron-icon" size={20} />
