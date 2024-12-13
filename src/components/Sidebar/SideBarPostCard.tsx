@@ -3,9 +3,9 @@ import "./styles.css";
 import { BsChevronRight } from "react-icons/bs";
 
 const SidebarPostCard = ({
-  title = "Placeholder Title",
-  description = "This is a placeholder description for the post. It gives a brief overview.",
-  image = "placeholder.png",
+  title,
+  description,
+  image,
 }) => {
   return (
     <div className="sidebar-post-card d-flex align-items-center">

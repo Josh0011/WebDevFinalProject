@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles.css";
 import SidebarPostCard from "./SideBarPostCard";
+import RecentGameCard from "./RecentGameCard";
 
 const Sidebar = () => {
   const recentPosts = [
@@ -27,19 +28,27 @@ const Sidebar = () => {
   const recentGames = [
     {
       id: 1,
+      mode: "Gem Grab",
       map: "Double Swoosh",
       mapImage: "doubleswoosh.png",
-      kills: 5,
-      brawlerImage: "surge.png",
-      rank: "Gold",
+      brawlerImage: "sandy.png",
+      brawlerName: "Sandy",
+      brawlerLevel: 9,
+      kills: 7,
+      deaths: 5,
+      damage: 13472,
     },
     {
       id: 2,
-      map: "Cavern Churn",
-      mapImage: "cavernchurn.png",
-      kills: 7,
-      brawlerImage: "dynamike.png",
-      rank: "Silver",
+      mode: "Bounty",
+      map: "Shooting Star",
+      mapImage: "shootingstar.png",
+      brawlerImage: "angelo.png",
+      brawlerName: "Angelo",
+      brawlerLevel: 10,
+      kills: 10,
+      deaths: 3,
+      damage: 28234,
     },
   ];
 
@@ -64,23 +73,21 @@ const Sidebar = () => {
       <section id="bs-recent-games">
         <h2 className="h5">Recent Games</h2>
         <hr />
+
         <ul className="list-unstyled">
           {recentGames.map((game) => (
             <li key={game.id} className="mb-3">
-              <img
-                src={game.mapImage}
-                alt={game.map}
-                className="img-fluid mb-2"
+              <RecentGameCard
+                mode={game.mode}
+                map={game.map}
+                mapImage={game.mapImage}
+                brawlerImage={game.brawlerImage}
+                brawlerName={game.brawlerName}
+                brawlerLevel={game.brawlerLevel}
+                kills={game.kills}
+                deaths={game.deaths}
+                damage={game.damage}
               />
-              <span className="d-block">{`Map: ${game.map}`}</span>
-              <span className="d-block">{`Kills: ${game.kills}`}</span>
-              <img
-                src={game.brawlerImage}
-                alt="Brawler"
-                className="img-fluid mt-2"
-                style={{ width: "30px" }}
-              />
-              <span className="d-block">{`Rank: ${game.rank}`}</span>
             </li>
           ))}
         </ul>

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles.css";
+import "./styles.css";
 import Sidebar from "../Sidebar/sidebar";
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [latestMembers, setLatestMembers] = useState([
-    { id: 1, name: "JohnDoe", profilePic: "surge.png" },
-    { id: 2, name: "JaneDoe", profilePic: "angelo.png" },
+    { id: 1, name: "SecondBest", profilePic: "surge.png" },
+    { id: 2, name: "JuanCarlos", profilePic: "kit.jpg" },
   ]);
   const [recentPosts, setRecentPosts] = useState([
     { id: 1, title: "My Current Meta Tier List" },
@@ -22,42 +23,60 @@ const Home = () => {
     <div className="container-fluid" id="bs-home">
       {/* Header Section */}
       <header
-        className="row align-items-center py-3 bg-darker text-white position-fixed w-100"
+        className="row align-items-center bg-darker text-white position-fixed"
         id="bs-header"
       >
-        <div className="col-3">
-          <h1 id="bs-logo">Melodie Stats</h1>
+        <div className="col-12 col-md-3 mb-2 mb-md-0">
+          <img
+            src="logo.png"
+            alt="Melodie Stats Logo"
+            className="img-fluid"
+            style={{ maxWidth: "300px" }}
+          />
         </div>
-        <div className="col-6">
-          <ul className="list-unstyled d-flex justify-content-center mb-0" id="bs-carousel">
+        <div className="col-12 col-md-6 mb-2 mb-md-0">
+          <ul
+            className="list-unstyled d-flex justify-content-center mb-0"
+            id="bs-carousel"
+          >
             {latestMembers.map((member) => (
-              <li key={member.id} className="me-3 text-center">
+              <li key={member.id} className="me-2 text-center">
                 <img
                   src={member.profilePic}
                   alt={`${member.name} profile`}
-                  className="rounded-circle mb-2"
-                  style={{ width: "50px", height: "50px" }}
+                  className="rounded-circle mb-1"
+                  style={{
+                    width: "30px", // Reduced size
+                    height: "30px",
+                    objectFit: "cover", // Maintain aspect ratio
+                  }}
                 />
-                <span>{`${member.name} just joined!`}</span>
+                <small>{`${member.name} just joined!`}</small>{" "}
+                {/* Smaller text */}
               </li>
             ))}
           </ul>
         </div>
-        <div className="col-3 text-end">
+        <div className="col-12 col-md-3 text-md-end d-flex flex-column align-items-end">
           {isLoggedIn ? (
             <div id="bs-profile" className="d-flex align-items-center">
               <img
                 src="/user_placeholder.jpg"
                 alt="User Profile"
                 className="rounded-circle me-2"
-                style={{ width: "40px", height: "40px" }}
+                style={{ width: "40px", height: "40px", objectFit: "cover" }}
               />
               <span>Username</span>
             </div>
           ) : (
-            <div id="bs-auth-buttons">
-              <button className="btn btn-primary me-2">Log In</button>
-              <button className="btn btn-secondary">Sign Up</button>
+            <div id="bs-auth-buttons" className="text-center">
+              <button className="btn btn-primary btn-lg mb-2 me-2">
+                Log In
+              </button>
+              <button className="btn btn-success btn-lg mb-2">Sign Up</button>
+              <p className="text-secondary small mb-0">
+                Sign in to access personalized features!
+              </p>
             </div>
           )}
         </div>
@@ -75,11 +94,7 @@ const Home = () => {
             {recentPosts.map((post) => (
               <li key={post.id} className="col-md-4 mb-4">
                 <div className="card">
-                  <img
-                    src="tierlist.png"
-                    alt="Post"
-                    className="card-img-top"
-                  />
+                  <img src="tierlist.png" alt="Post" className="card-img-top" />
                   <div className="card-body">
                     <h5 className="card-title">{post.title}</h5>
                     <p className="card-text">Click to explore more...</p>

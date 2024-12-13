@@ -1,0 +1,136 @@
+/* Sidebar Styling */
+#bs-sidebar {
+    position: fixed;
+    top: 119px; /* Start below the header */
+    right: 0;
+    height: calc(100vh - 70px);
+    width: 300px;
+    background-color: #141432;
+    overflow-y: auto;
+    padding: 20px;
+    z-index: 999;
+  }
+  
+  @media (max-width: 768px) {
+    #bs-sidebar {
+      position: relative; /* Allow it to become part of the flow */
+      top: 0;
+      height: auto; /* Expand naturally */
+      width: 100%; /* Full width on smaller screens */
+    }
+  }  
+  
+
+  /* Sidebar Post Card Styling */
+  .sidebar-post-card {
+    display: flex;
+    align-items-center;
+    gap: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1a1a40; /* Same color as the main background */
+    color: white;
+    overflow: hidden; /* Ensures no overflow */
+    cursor: pointer;
+  }
+  
+  .sidebar-post-card:hover {
+    background-color: #141432; /* Slightly darker for hover effect */
+  }
+  
+  .post-image-container img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .post-content {
+    flex-grow: 1;
+    overflow: hidden;
+  }
+  
+  .post-title,
+  .post-description {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 20px); /* Prevent text from overflowing */
+  }
+  
+  .chevron-icon {
+    color: #434384;
+  }
+
+/* Recent Game Card Styling */
+.recent-game-card {
+    display: flex;
+    align-items: start;
+    gap: 15px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1a1a40; /* Match the main background color */
+    color: white;
+    overflow: hidden;
+  }
+  
+  .recent-game-card:hover {
+    background-color: #141432; /* Slightly darker hover effect */
+  }
+  
+  .map-image-container img {
+    width: 126px; /* 504px scaled down */
+    height: 204px; /* 816px scaled down */
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .game-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Even spacing for all elements */
+    height: 100%;
+  }
+  
+  .game-info .game-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .brawler-info img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .brawler-info .brawler-name {
+    font-size: 0.85rem;
+    font-weight: bold;
+  }
+  
+  .brawler-info .brawler-level {
+    font-size: 0.8rem;
+    color: #ccc;
+  }
+  
+  .game-stats .game-stat {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  
+  .game-stats .kills {
+    color: #28a745; /* Green for kills */
+  }
+  
+  .game-stats .deaths {
+    color: #dc3545; /* Red for deaths */
+  }
+  
+  .game-stats .damage {
+    color: #ffc61c; /* Yellow for damage */
+  }
+  
